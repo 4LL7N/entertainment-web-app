@@ -119,14 +119,13 @@ function Signup(props:{users:usersObj[]}) {
     
     })
        
-       navigation("home")
+       navigation("/login")
     }
   }
 
   return (
     <>
-     <div className="flex flex-col items-center  w-[100vw] h-[100vh] bg-[#10141E] px-[24px] pt-[48px] pb-[170px]"  >
-                <img className="mb-[58.4px]" src="/images/logo.svg" />
+     
       <div className="w-[100%] p-[24px] pb-[32] flex flex-col items-center bg-[#161D2F] rounded-[10px] ">
 
         <h1 className="text-[32px] text-[#FFF] font-light tarcking-[-0.5px] mb-[40px] self-start	">
@@ -213,7 +212,7 @@ function Signup(props:{users:usersObj[]}) {
         </span>
 
       </div>
-      </div>
+      
     </>
   );
 }

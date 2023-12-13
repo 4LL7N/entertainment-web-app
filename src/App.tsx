@@ -1,12 +1,14 @@
 import { useState } from 'react'
-import { Route , Routes } from 'react-router'
 import data from "./../data.json";
-import StartPage from './Components/StartPage';
+import AuthLayout from './Components/AuthLayout';
 import Login from './Components/Login'
 import Signup from './Components/Signup';
-import Website from './Components/Website';
+import Layout from './Components/Layout';
 import Home from './Components/Home';
-import { Navigate } from 'react-router-dom';
+import Page from './Components/Page';
+import { Navigate , createBrowserRouter , RouterProvider } from 'react-router-dom';
+
+
 
 interface usersObj{
     email:string
@@ -19,21 +21,54 @@ function App() {
   // const [logSign,setLogSign] = useState(0)
   
   let users:usersObj[]|never[]=[]
+  const [search, setSearch] = useState<undefined|string>()
+  const [logOut, setLogOut] = useState<boolean>(false)
+
+
+  const router = createBrowserRouter([
+    {
+      element:<Layout search={search} setSearch={setSearch} logOut={logOut} setLogOut={setLogOut} />,
+      children:[
+        {
+          path:"/home",
+          element:<Home Filmdata={Filmdata} search={search} />
+        },
+        {
+          path:"/:page",
+          element:<Page Filmdata={Filmdata} search={search} />
+        }
+      ]
+    },
+    {
+      element:<AuthLayout/>,
+      children:[
+        {
+          path:"/",
+          element:<Navigate to="/login" />
+        },
+        {
+          path:"/login",
+          element:<Login users={users} setLogOut={setLogOut} />
+        },
+        {
+          path:"/signup",
+          element:<Signup users={users} />
+        }
+      ]
+    }
+  ])
+
+  
+
+
+  
 
 
 
 
   return (
     <>
-      <Routes>
-        <Route path='/' element={<StartPage  />} >
-          {/* <Route index path='login' element={<Login users={users} />}/>
-          <Route path='signup' element={<Signup users={users} />}/>  */}
-          <Route path='website' element={<Website/>}>
-            <Route index path='home' element={<Home Filmdata={Filmdata} />}/>
-          </Route>
-        </Route> 
-      </Routes>
+      <RouterProvider  router={router}  />
     </>
   )
 }
