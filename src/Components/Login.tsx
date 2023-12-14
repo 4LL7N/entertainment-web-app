@@ -6,7 +6,7 @@ interface usersObj{
     password:string
 }
 
-function Login(props:{users:usersObj[]|never[],setLogOut:any}){
+function Login(props:{users:any,setLogOut:any}){
   
     const logNavigation = useNavigate()
 
@@ -41,9 +41,9 @@ function Login(props:{users:usersObj[]|never[],setLogOut:any}){
             emptyLogPassErrChk = false 
         }
 
-
-        let userObj = props.users.filter((item) => item?.email == logEmail.current?.value && item?.password == logPassword.current.value )
-        console.log(userObj.length);
+        
+        let userObj = props.users.current.filter((item:usersObj) => item?.email == logEmail.current?.value && item?.password == logPassword.current.value )
+        
         if(userObj.length == 0){
             setUserError(true)
             userErrorChk = true
@@ -53,7 +53,7 @@ function Login(props:{users:usersObj[]|never[],setLogOut:any}){
             setUserError(false)
             userErrorChk = false
         }
-        
+        console.log(userObj);
         if(!emptyLogEmailErrChk && !emptyLogPassErrChk && !userErrorChk){
             
             
@@ -65,12 +65,12 @@ function Login(props:{users:usersObj[]|never[],setLogOut:any}){
     return(
         <>
              
-                <div className="w-[100%] p-[24px] pb-[32] flex flex-col items-center bg-[#161D2F] rounded-[10px] "  >
+                <div className="w-[100%] p-[24px] pb-[32] flex flex-col items-center bg-[#161D2F] rounded-[10px] md:rounded-[20px] "  >
                     <h1 className="text-[32px] text-[#FFF] font-light tarcking-[-0.5px] mb-[40px] self-start	" >Login</h1>
-                    <div className={`w-[100%] border-b border-b-solid border-b-[#5A698F] mb-[24px] pl-[16px] pb-[18px] ${emptyLogEmailErr || userError?"border-b-[#FC4747]":null} `} ><input className='w-[150px] text-[15px] text-[#FFF] font-light bg-transparent focus:outline-none ' type="email" name="email" id="email" placeholder="Email address" autoComplete="off" ref={logEmail} /> <a className={`${emptyLogEmailErr?"text-[13px] text-[#FC4747] font-light":"hidden"}`} >Can’t be empty</a>  </div>
-                    <div className={`w-[100%] border-b border-b-solid border-b-[#5A698F] ${userError?"mb-[24px]":"mb-[40px]"} pl-[16px] pb-[18px] ${emptyLogPassErr || userError?"border-b-[#FC4747]":null} `} ><input className="w-[150px] text-[15px] text-[#FFF] font-light bg-transparent focus:outline-none " type="password" name="password" id="password" placeholder="Password" ref={logPassword} /><a className={`${emptyLogPassErr?"text-[13px] text-[#FC4747] font-light":"hidden"}`} >Can’t be empty</a>  </div>
+                    <div className={`w-[100%] flex justify-between border-b border-b-solid border-b-[#5A698F] mb-[24px] pl-[16px] pb-[18px] hover:border-b-[#FFF] ${emptyLogEmailErr || userError?"border-b-[#FC4747]":null} `} ><input className='w-[150px] text-[15px] text-[#FFF] font-light bg-transparent focus:outline-none  md:w-[200px] lg:w-[230px]' type="email" name="email" id="email" placeholder="Email address" autoComplete="off" ref={logEmail} /> <a className={`${emptyLogEmailErr?"text-[13px] text-[#FC4747] font-light":"hidden"}`} >Can’t be empty</a>  </div>
+                    <div className={`w-[100%] flex justify-between border-b border-b-solid border-b-[#5A698F] ${userError?"mb-[24px]":"mb-[40px]"} pl-[16px] pb-[18px] hover:border-b-[#FFF] ${emptyLogPassErr || userError?"border-b-[#FC4747]":null} `} ><input className="w-[150px] text-[15px] text-[#FFF] font-light bg-transparent focus:outline-none  md:w-[200px] lg:w-[230px]" type="password" name="password" id="password" placeholder="Password" ref={logPassword} /><a className={`${emptyLogPassErr?"text-[13px] text-[#FC4747] font-light":"hidden"}`} >Can’t be empty</a>  </div>
                     <p className={`${userError?"text-[13px] text-[#FC4747] font-light":"hidden"} mb-[40px]  `}>Email or password is not correct</p>
-                    <button className="w-[100%] bg-[#FC4747] rounded-[6px] py-[15px] text-[15px] text-[#FFF] font-light mb-[24px]" onClick={() =>  {HandleLogin() , props.setLogOut(true)}} >Login to your account</button>
+                    <button className="w-[100%] bg-[#FC4747] rounded-[6px] py-[15px] text-[15px] text-[#FFF] font-light mb-[24px] hover:bg-[#FFF] hover:text-[#161D2F] " onClick={() =>  {HandleLogin() , props.setLogOut(true)}} >Login to your account</button>
                     <span className=" flex" ><a className="w-[156px] text-[15px] text-[#FFF] font-light mr-[9px]" >Don’t have an account?</a><Link className="text-[15px] text-[#FC4747] font-light " to="/signup" >Sign Up</Link></span>
                 </div>
             

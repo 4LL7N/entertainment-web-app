@@ -6,7 +6,7 @@ interface usersObj{
     password:string
 }
 
-function Signup(props:{users:usersObj[]}) {
+function Signup(props:{users:any}) {
   const navigation = useNavigate();
 
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -82,7 +82,7 @@ function Signup(props:{users:usersObj[]}) {
     }
     
 
-    let checkUser = props.users.filter((item) => item.email == email.current?.value)
+    let checkUser = props.users.current.filter((item:usersObj) => item.email == email.current?.value)
     console.log(props.users);
     if(checkUser.length > 1){
         setUsedEmail(true)
@@ -113,11 +113,13 @@ function Signup(props:{users:usersObj[]}) {
         // console.log(email.current.value);
         // console.log(password.current.value);
         
-       props.users.push({
+       props.users.current =[...props.users.current,{
         email:email.current?.value,
         password:password.current?.value
+       }]
+        
     
-    })
+    
        
        navigation("/login")
     }
@@ -126,19 +128,19 @@ function Signup(props:{users:usersObj[]}) {
   return (
     <>
      
-      <div className="w-[100%] p-[24px] pb-[32] flex flex-col items-center bg-[#161D2F] rounded-[10px] ">
+      <div className="w-[100%] p-[24px] pb-[32] flex flex-col items-center bg-[#161D2F] rounded-[10px] md:rounded-[20px]">
 
         <h1 className="text-[32px] text-[#FFF] font-light tarcking-[-0.5px] mb-[40px] self-start	">
           Sign Up
         </h1>
 
         <div
-          className={`w-[100%] flex justify-between border-b border-b-solid border-b-[#5A698F] mb-[24px] pl-[16px] pb-[18px] ${
+          className={`w-[100%] flex justify-between border-b border-b-solid border-b-[#5A698F] mb-[24px] pl-[16px] pb-[18px]  hover:border-b-[#FFF] ${
             emptyEmail || emailerr || usedEmail ? "border-b-[#FC4747]" : null
           } `}
         >
           <input
-            className="w-[150px] text-[15px] text-[#FFF] font-light bg-transparent focus:outline-none "
+            className="w-[150px] text-[15px] text-[#FFF] font-light bg-transparent focus:outline-none md:w-[200px] lg:w-[230px]"
             type="email"
             name="email"
             id="email"
@@ -156,12 +158,12 @@ function Signup(props:{users:usersObj[]}) {
         </div>
 
         <div
-          className={`w-[100%] flex justify-between border-b border-b-solid border-b-[#5A698F] mb-[24px] pl-[16px] pb-[18px] ${
+          className={`w-[100%] flex justify-between border-b border-b-solid border-b-[#5A698F] mb-[24px] pl-[16px] pb-[18px]  hover:border-b-[#FFF] ${
             emptyPassword ? "border-b-[#FC4747]" : null
           } `}
         >
           <input
-            className="w-[150px] text-[15px] text-[#FFF] font-light bg-transparent focus:outline-none "
+            className="w-[150px] text-[15px] text-[#FFF] font-light bg-transparent focus:outline-none  md:w-[200px] lg:w-[230px]"
             type="password"
             name="password"
             id="password"
@@ -174,12 +176,12 @@ function Signup(props:{users:usersObj[]}) {
         </div>
 
         <div
-          className={`w-[100%] flex justify-between border-b border-b-solid border-b-[#5A698F] ${usedEmail?"mb-[24px]" :"mb-[40px]"} pl-[16px] pb-[18px]  ${
+          className={`w-[100%] flex justify-between border-b border-b-solid border-b-[#5A698F]  hover:border-b-[#FFF] ${usedEmail?"mb-[24px]" :"mb-[40px]"} pl-[16px] pb-[18px]  ${
             repemptyPassword || repPassErr ? "border-b-[#FC4747]" : null
           } `}
         >
           <input
-            className="w-[130px] text-[15px] text-[#FFF] font-light bg-transparent focus:outline-none "
+            className="w-[130px] text-[15px] text-[#FFF] font-light bg-transparent focus:outline-none  md:w-[200px] lg:w-[230px]"
             type="password"
             name="repeatPassword"
             id="repeatPassword"
@@ -196,7 +198,7 @@ function Signup(props:{users:usersObj[]}) {
         </div>
         <p className={`${usedEmail?"text-[13px] text-[#FC4747] font-light":"hidden"} mb-[40px] `} >This email is already registered</p>
         <button
-          className="w-[100%] bg-[#FC4747] rounded-[6px] py-[15px] text-[15px] text-[#FFF] font-light mb-[24px]"
+          className="w-[100%] bg-[#FC4747] rounded-[6px] py-[15px] text-[15px] text-[#FFF] font-light mb-[24px] hover:bg-[#FFF] hover:text-[#161D2F]"
           onClick={() => HandleSignup()}
         >
           Create an account

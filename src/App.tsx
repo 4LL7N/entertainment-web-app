@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import data from "./../data.json";
 import AuthLayout from './Components/AuthLayout';
 import Login from './Components/Login'
@@ -20,7 +20,7 @@ function App() {
   console.log(Filmdata);
   // const [logSign,setLogSign] = useState(0)
   
-  let users:usersObj[]|never[]=[]
+  const users= useRef<usersObj[]>([]) //useRef
   const [search, setSearch] = useState<undefined|string>()
   const [logOut, setLogOut] = useState<boolean>(false)
 
